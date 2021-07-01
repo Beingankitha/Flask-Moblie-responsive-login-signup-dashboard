@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content%}
+    <div class="container" >
+      <div class="card">
+          <div class="card-body">
+            <form action="/register" method="post">
+              <div class="row justify-content-md-center">
+                <div class="">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                      {% if messages %}
+                        <ul class=flashes>
+                        {% for category, message in messages %}
+                          <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endwith %}
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Enter your E-mail ID</label><br>
+                <input type="email" class="form-control" placeholder="Email-ID" name="email" id="email" autocomplete="off" required="required" autofocus /><br>
+                <span id="emailMsg"></span>
+                <label>Enter your Full Name</label><br>
+                <input type="text" class="form-control" placeholder="Full Name" name="fullname" id="fullname" required="required" ><br>
+                <span id="fnmMsg"></span>
+                <label>Enter your age</label><br>
+                <input type="number" class="form-control" placeholder="Age" min="0" step="1" oninput="validity.valid||(value='')" name="age"  id="age" required="required" pattern="[0-1]{1}[0-9]{0,2}"><br>
+                <span id="ageMsg"></span>
+                <label>Select your gender</label><br>
+                <select class="form-control" name="gender" id="gender" required="required">
+                  <option value="" selected disabled hidden>Select Here</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select><br>
+              
+                <label>Enter your Postcode</label><br>              
+                <div id="lookup_field"></div> <br>
+                <input type="button" class="btn btn-info btn-lg" id="customButton" value="Find Address"><br><br>
+                <label>Address Line 1</label> <br>
+                <input id="first_line" name="first_line" class="form-control" type="text" readonly> <br>
+                <label>Address Line 2</label><br>
+                <input id="second_line" name="second_line" class="form-control" type="text" readonly><br>
+                <label>Address Line 3</label><br>
+                <input id="third_line" name="third_line" class="form-control" type="text" readonly><br>
+                <label>Post Town</label> <br>
+                <input id="post_town" name="post_town" class="form-control" type="text" readonly><br>
+                <label>Postcode</label> <br>
+                <input id="postcode" name="postcode" class="form-control" type="text" readonly><br>
+              <script>
+                  
+                $('#lookup_field').setupPostcodeLookup({
+                  api_key: 'ak_ki4hea3suwsnA03ZuMzMsLISFEZr1',
+                  output_fields: {
+                    line_1: '#first_line',  
+                    line_2: '#second_line',         
+                    line_3: '#third_line',
+                    post_town: '#post_town',
+                    postcode: '#postcode'
+                  },
+                  button: '#customButton'
+                });
+                
+              </script>
+
+              <label>Do you have any  Underlying Health Condition?</label><br>
+              <input type="radio" name="chk" id="chkYes" value="yes" onclick="ShowHideDiv()"> Yes &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" name="chk" id="chkNo" value="no" onclick="ShowHideDiv()"> No<br><br>
+              <div id="dvtext" style="display: none;">
+              <label>Do you have any  Underlying Health Condition?</label><br>
+              <input type="text" class="form-control" placeholder="Enter your Health Detail.." name="txtBox" id="txtBox"/><br>
+              </div>
+              <label>Password</label><br>
+              <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Password" required><br>
+              <span id="passMsg"></span>
+              <label>Confirm Password</label><br>
+              <input type="password" class="form-control" name="cpwd" id="cpwd" placeholder="Password" required><br>
+              <span id="cpassMsg"></span>
+              <br>
+              <input type="Submit" class="btn btn-info btn-lg" id="btn" value="Submit">
+              <input type="Reset" class="btn btn-info btn-lg" value="Reset"><br><br>
+              <p>Already Registered?<a href="/login"> Login Here</a></p>
+              </div>
+            </form>
+          </div>
+        </div>
+
+    </div>
+
+  <script>
+    function ShowHideDiv() {
+        var chkYes = document.getElementById("chkYes");
+        var dvtext = document.getElementById("dvtext");
+        dvtext.style.display = chkYes.checked ? "block" : "none";
+    };
+
+  </script>
+ 
+{% endblock %}
+

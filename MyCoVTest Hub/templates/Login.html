@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content%}
+
+    <div class="container">
+       <div class="card ">
+          <div class="card_body">            
+              <div class="">
+                  {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                      <ul>
+                      {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                          {% endfor %}
+                      </ul>
+                    {% endif %}
+                  {% endwith %}
+              </div>
+            </div>
+            <form id="form.login" class="form" method="POST" action="/login">
+
+              <label>Email ID</label><br>
+              <input type="text" class="form-control" name="login_username" placeholder="Email ID" required autofocus><br>
+              <label>Password</label><br>
+              <input type="password" class="form-control" name="login_password" placeholder="Password" required><br>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" value="remember-me"> Remember me
+                </label>
+              </div>
+              <input type="Submit" class="btn btn-info btn-block btn-lg" value="Login">
+
+            </form>
+            <p >Not a member?<a href="/register"> Create Account</a></p>
+
+         </div> 
+        </div>
+
+  </div>
+{% endblock %}
